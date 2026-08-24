@@ -9,13 +9,12 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image totalhealthBar;
     [SerializeField] private Image currentlhealthBar;
 
-    private void Start()
-    {
-        totalhealthBar.fillAmount = playerHealth.currentHealth / 10;
-    }
+    private float baseMaxHealth = 10f;
+
 
     private void Update()
     {
-        currentlhealthBar.fillAmount = playerHealth.currentHealth / 10;
+        totalhealthBar.fillAmount = playerHealth.maxHealth / baseMaxHealth;
+        currentlhealthBar.fillAmount = playerHealth.currentHealth / baseMaxHealth;
     }
 }

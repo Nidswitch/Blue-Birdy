@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Special feather
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - UI
   - Ground
   - Enemy
-  - 
+  - Abilities
   - 
   - 
   - 
@@ -38,8 +39,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: 5
+    uniqueID: 600844939
+    locked: 0
+  - name: 4
+    uniqueID: 1895975587
+    locked: 0
+  - name: Nest
+    uniqueID: 1039223743
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: 2
+    uniqueID: 2991207413
+    locked: 0
+  - name: 1
+    uniqueID: 2044485477
+    locked: 0
   m_RenderingLayers:
   - Default
+  m_MigratedRenderPipelines: []

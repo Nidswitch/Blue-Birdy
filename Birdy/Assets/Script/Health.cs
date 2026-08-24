@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float startingHealth;
     public float currentHealth { get; private set;}
+    public float maxHealth { get; private set;}
     private bool dead;
     public GameObject player;
     public Transform respawnPoint;
@@ -14,28 +15,34 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        currentHealth = startingHealth;
+        maxHealth = startingHealth;
+        currentHealth = maxHealth;
     }
     public void TakeDamage(float _damage)
     {
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, maxHealth);
+        Debug.Log("Vie restante : " + currentHealth);
     
 
         if(currentHealth <= 0)
         {
             player.transform.position = respawnPoint.position;
-            AddHealth(startingHealth);
+            currentHealth = maxHealth;
         }
 
         
     }
 
-public void AddHealth(float _value)
+    public void AddHealth(float _value)
     {
-        currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth + _value, 0, maxHealth);
     }
     
-    
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += maxHealth;
+    }
 
     
 }
