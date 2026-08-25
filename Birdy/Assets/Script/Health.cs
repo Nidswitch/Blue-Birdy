@@ -41,7 +41,7 @@ public class Health : MonoBehaviour
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
-        currentHealth += amount;
+        currentHealth = maxHealth;
     }
 
     
