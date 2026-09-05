@@ -16,6 +16,8 @@ public class Playercontroller : MonoBehaviour
 	[SerializeField] private float isTopDownSpeed = 6f;
 	[SerializeField] private float glideSpeed = 2f;
 	private bool canFly = false;
+
+    [SerializeField] private float bouncePower = 12f;
 	
 	
 	private void Update()
@@ -38,7 +40,7 @@ public class Playercontroller : MonoBehaviour
 			float axisRaw = Input.GetAxisRaw("Horizontal");
 			float axisRaw2 = Input.GetAxisRaw("Vertical");
 			rb.linearVelocity = new Vector2(axisRaw, axisRaw2).normalized * isTopDownSpeed;
-			if (!animator.GetBool("isAttacking") && !animator.GetBool("IsShooting"))
+			if (!animator.GetBool("isAttacking") && !animator.GetBool("isAttackingUp") && !animator.GetBool("isAttackingDown") && !animator.GetBool("IsShooting"))
 			{
 				animator.SetBool("IsJumping", true);
 			}
@@ -65,7 +67,7 @@ public class Playercontroller : MonoBehaviour
 			{
 				rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
 			}
-			if (!IsGrounded() && !animator.GetBool("isAttacking") && !animator.GetBool("IsShooting"))
+			if (!IsGrounded() && !animator.GetBool("isAttacking") && !animator.GetBool("isAttackingUp") && !animator.GetBool("isAttackingDown") && !animator.GetBool("IsShooting"))
 			{
 				animator.SetBool("IsJumping", true);
 			}
@@ -80,9 +82,23 @@ public class Playercontroller : MonoBehaviour
 		{
 			animator.SetBool("isWalking", false);
 		}
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.S))
 		{
 			animator.SetBool("isAttacking", true);
+			animator.SetBool("IsJumping", false);
+		}
+		if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.W))
+		{
+			animator.SetBool("isAttackingUp", true);
+			animator.SetBool("isAttackingDown", false);
+			animator.SetBool("isAttacking", false);
+			animator.SetBool("IsJumping", false);
+		}
+		if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !IsGrounded())
+		{
+			animator.SetBool("isAttackingDown", true);
+			animator.SetBool("isAttackingUp", false);
+			animator.SetBool("isAttacking", false);
 			animator.SetBool("IsJumping", false);
 		}
 		if (Input.GetButtonDown("Fire1"))
@@ -93,10 +109,18 @@ public class Playercontroller : MonoBehaviour
 		Flip();
 	}
 
+	public void Pogo()
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, bouncePower);
+        animator.SetBool("isAttackingDown", true);
+    }
+
 	// Token: 0x06000026 RID: 38 RVA: 0x00002B3C File Offset: 0x00000D3C
 	public void endAttack()
 	{
+		animator.SetBool("isAttackingDown", false);
 		animator.SetBool("isAttacking", false);
+		animator.SetBool("isAttackingUp", false);
 		animator.SetBool("IsShooting", false);
 	}
 

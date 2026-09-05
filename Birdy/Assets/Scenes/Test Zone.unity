@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 29067556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.081, y: -0.448, z: 0}
+  m_LocalPosition: {x: 0.039, y: -0.322, z: 0}
   m_LocalScale: {x: -0.060094442, y: -0.029045647, z: -0.22893123}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1103,7 +1103,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.421875}
+  m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1117,7 +1117,7 @@ Transform:
   m_GameObject: {fileID: 325375344}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.512, y: -0.096, z: 0}
+  m_LocalPosition: {x: -0.512, y: -0.088, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1167,7 +1167,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 0.421875}
-    newSize: {x: 1, y: 0.421875}
+    newSize: {x: 2, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1247,6 +1247,7 @@ MonoBehaviour:
     m_Bits: 64
   isTopDownSpeed: 6
   glideSpeed: 1
+  bouncePower: 10
 --- !u!114 &325375357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,19 +1291,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28b9b1a140eb4d4a8a042a255766fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  startTimeBtwAttack: 0.15
+  startTimeBtwAttack: 0.1
   attackPos: {fileID: 1559368919}
   attackPos2: {fileID: 1018963368}
   attackPos3: {fileID: 29067557}
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 128
+  whatIsSpikes:
+    serializedVersion: 2
+    m_Bits: 512
   attackRangeX: 0.6
   attackRangeY: 0.35
-  attackRangeX2: 0.35
-  attackRangeY2: 0.5
-  attackRangeX3: 0.35
-  attackRangeY3: 0.5
+  attackRangeX2: 0.9
+  attackRangeY2: 0.55
+  attackRangeX3: 0.9
+  attackRangeY3: 0.9
   damage: 2
 --- !u!114 &325375360
 MonoBehaviour:
@@ -2447,6 +2451,7 @@ GameObject:
   - component: {fileID: 693422915}
   - component: {fileID: 693422914}
   - component: {fileID: 693422913}
+  - component: {fileID: 693422916}
   m_Layer: 5
   m_Name: Pause Button
   m_TagString: Untagged
@@ -2567,6 +2572,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693422911}
   m_CullTransparentMesh: 1
+--- !u!114 &693422916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693422911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1 &702660764
 GameObject:
   m_ObjectHideFlags: 0
@@ -122382,8 +122400,8 @@ Tilemap:
   - first: {x: 51, y: -8, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -200732,8 +200750,8 @@ Tilemap:
   - first: {x: 8, y: 36, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 12
-      m_TileSpriteIndex: 12
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -201202,8 +201220,8 @@ Tilemap:
   - first: {x: 55, y: 36, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -206412,8 +206430,8 @@ Tilemap:
   - first: {x: 101, y: 40, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 6
-      m_TileSpriteIndex: 6
+      m_TileIndex: 8
+      m_TileSpriteIndex: 8
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -227772,8 +227790,8 @@ Tilemap:
   - first: {x: -24, y: 60, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 11
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -227992,8 +228010,8 @@ Tilemap:
   - first: {x: -2, y: 60, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -346852,10 +346870,10 @@ Tilemap:
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - serializedVersion: 2
-    m_RefCount: 197
+    m_RefCount: 198
     m_Data: {fileID: 11400000, guid: d544b9c31a4a5f34a8a2f2096129b2d8, type: 2}
   - serializedVersion: 2
-    m_RefCount: 34117
+    m_RefCount: 34118
     m_Data: {fileID: 11400000, guid: 96c652bb0de3672418e72ff655409cc6, type: 2}
   - serializedVersion: 2
     m_RefCount: 1
@@ -346864,19 +346882,19 @@ Tilemap:
     m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 277f9bd71f3faaa409c3fa7018b198de, type: 2}
   - serializedVersion: 2
-    m_RefCount: 13
+    m_RefCount: 14
     m_Data: {fileID: 11400000, guid: f37b075672552b740a8fcff1e37cbfed, type: 2}
   - serializedVersion: 2
     m_RefCount: 7
     m_Data: {fileID: 11400000, guid: 97483d3411c04e84eb0e0d2f78ea7fdc, type: 2}
   - serializedVersion: 2
-    m_RefCount: 6
+    m_RefCount: 5
     m_Data: {fileID: 11400000, guid: fd81f98fe025dd94589dbb9854a455ed, type: 2}
   - serializedVersion: 2
-    m_RefCount: 13
+    m_RefCount: 12
     m_Data: {fileID: 11400000, guid: dc1a5731fe76cc84da100517d04ba339, type: 2}
   - serializedVersion: 2
-    m_RefCount: 3
+    m_RefCount: 4
     m_Data: {fileID: 11400000, guid: fbbcaddfa010ff04aa86997b5f4e383c, type: 2}
   - serializedVersion: 2
     m_RefCount: 5
@@ -346888,20 +346906,20 @@ Tilemap:
     m_RefCount: 4
     m_Data: {fileID: 11400000, guid: b584d984915774d44bf5f73ea39d4db9, type: 2}
   - serializedVersion: 2
-    m_RefCount: 3
+    m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 5c55dcb4011978548b91046015612f7e, type: 2}
   - serializedVersion: 2
-    m_RefCount: 12
+    m_RefCount: 11
     m_Data: {fileID: 11400000, guid: ff4b857e0bee8ef45bdbbf36c4c3c094, type: 2}
   - serializedVersion: 2
     m_RefCount: 5
     m_Data: {fileID: 11400000, guid: bb6414d38a316a04fb2ddd0d91e41ea9, type: 2}
   m_TileSpriteArray:
   - serializedVersion: 2
-    m_RefCount: 197
+    m_RefCount: 198
     m_Data: {fileID: -150599755, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 34117
+    m_RefCount: 34118
     m_Data: {fileID: 1631003859, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
     m_RefCount: 4
@@ -346910,19 +346928,19 @@ Tilemap:
     m_RefCount: 4
     m_Data: {fileID: 972481379, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 13
+    m_RefCount: 14
     m_Data: {fileID: -1574925766, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
     m_RefCount: 7
     m_Data: {fileID: 1923696685, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 6
+    m_RefCount: 5
     m_Data: {fileID: 4680987, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 13
+    m_RefCount: 12
     m_Data: {fileID: 1383451624, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 3
+    m_RefCount: 4
     m_Data: {fileID: 110063094613122208, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
     m_RefCount: 5
@@ -346931,10 +346949,10 @@ Tilemap:
     m_RefCount: 7
     m_Data: {fileID: 216185377, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 12
+    m_RefCount: 11
     m_Data: {fileID: 1481879383, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
-    m_RefCount: 3
+    m_RefCount: 2
     m_Data: {fileID: 1222775806, guid: 79eb2bda3929cf74fb342054a0af7c4c, type: 3}
   - serializedVersion: 2
     m_RefCount: 1
@@ -349344,7 +349362,7 @@ GameObject:
   - component: {fileID: 1406973016}
   - component: {fileID: 1406973015}
   - component: {fileID: 1406973018}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353618,6 +353636,7 @@ GameObject:
   - component: {fileID: 1946482004}
   - component: {fileID: 1946482003}
   - component: {fileID: 1946482002}
+  - component: {fileID: 1946482005}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -353738,6 +353757,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946482000}
   m_CullTransparentMesh: 1
+--- !u!114 &1946482005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946482000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1 &1957567562
 GameObject:
   m_ObjectHideFlags: 0
@@ -353803,8 +353835,9 @@ GameObject:
   - component: {fileID: 1971483801}
   - component: {fileID: 1971483800}
   - component: {fileID: 1971483799}
+  - component: {fileID: 1971483802}
   m_Layer: 5
-  m_Name: Retry
+  m_Name: Continue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353923,6 +353956,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971483797}
   m_CullTransparentMesh: 1
+--- !u!114 &1971483802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971483797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1 &2007398449
 GameObject:
   m_ObjectHideFlags: 0
@@ -354301,6 +354347,7 @@ GameObject:
   - component: {fileID: 2136784543}
   - component: {fileID: 2136784542}
   - component: {fileID: 2136784541}
+  - component: {fileID: 2136784544}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -354421,6 +354468,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136784539}
   m_CullTransparentMesh: 1
+--- !u!114 &2136784544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136784539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

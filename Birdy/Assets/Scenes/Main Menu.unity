@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 634416803}
   - component: {fileID: 634416802}
   m_Layer: 5
-  m_Name: Play (1)
+  m_Name: Feather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 1372145045}
   - component: {fileID: 1372145044}
   - component: {fileID: 1372145043}
+  - component: {fileID: 1372145046}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -551,6 +552,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372145041}
   m_CullTransparentMesh: 1
+--- !u!114 &1372145046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372145041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1 &1535552113
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +577,7 @@ GameObject:
   - component: {fileID: 1535552117}
   - component: {fileID: 1535552116}
   - component: {fileID: 1535552115}
+  - component: {fileID: 1535552118}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -683,6 +698,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535552113}
   m_CullTransparentMesh: 1
+--- !u!114 &1535552118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535552113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadaca70017d30e4a86adc8fedbbe298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonControl
+  sizeDifference: 1.1
 --- !u!1 &1751706723
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,8 +808,8 @@ RectTransform:
   m_Children:
   - {fileID: 770371968}
   - {fileID: 1535552114}
-  - {fileID: 634416801}
   - {fileID: 1372145042}
+  - {fileID: 634416801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

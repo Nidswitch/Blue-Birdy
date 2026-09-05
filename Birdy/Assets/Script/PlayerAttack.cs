@@ -4,69 +4,13 @@ using UnityEngine;
 // Token: 0x0200000C RID: 12
 public class PlayerAttack : MonoBehaviour
 {
-	// Token: 0x06000022 RID: 34 RVA: 0x000026B8 File Offset: 0x000008B8
-	private void Update()
-	{
-		if ((double)this.timeBtwAttack <= 0.2)
-		{
-			if (Input.GetKeyDown(KeyCode.Mouse0) && Input.GetKey(KeyCode.W))
-			{
-				Collider2D[] array = Physics2D.OverlapBoxAll(this.attackPos2.position, new Vector2(this.attackRangeX2, this.attackRangeY2), 0f, this.whatIsEnemies);
-				for (int i = 0; i < array.Length; i++)
-				{
-					array[i].GetComponent<Patrol>().TakeDamage(this.damage);
-				}
-			}
-			if (Input.GetKeyDown(KeyCode.Mouse0) && Input.GetKey(KeyCode.S))
-			{
-				Collider2D[] array2 = Physics2D.OverlapBoxAll(this.attackPos3.position, new Vector2(this.attackRangeX3, this.attackRangeY3), 0f, this.whatIsEnemies);
-				for (int j = 0; j < array2.Length; j++)
-				{
-					array2[j].GetComponent<Patrol>().TakeDamage(this.damage);
-				}
-			}
-			else if (Input.GetKeyDown(KeyCode.Mouse0))
-			{
-				Collider2D[] array3 = Physics2D.OverlapBoxAll(this.attackPos.position, new Vector2(this.attackRangeX, this.attackRangeY), 0f, this.whatIsEnemies);
-				for (int k = 0; k < array3.Length; k++)
-				{
-					array3[k].GetComponent<Patrol>().TakeDamage(this.damage);
-				}
-			}
-			this.timeBtwAttack = this.startTimeBtwAttack;
-			return;
-		}
-		this.timeBtwAttack -= Time.deltaTime;
-	}
-
-	// Token: 0x06000023 RID: 35 RVA: 0x00002844 File Offset: 0x00000A44
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireCube(this.attackPos.position, new Vector3(this.attackRangeX, this.attackRangeY, 1f));
-		Gizmos.DrawWireCube(this.attackPos2.position, new Vector3(this.attackRangeX2, this.attackRangeY2, 1f));
-		Gizmos.DrawWireCube(this.attackPos3.position, new Vector3(this.attackRangeX3, this.attackRangeY3, 1f));
-	}
-
-	// Token: 0x04000027 RID: 39
 	private float timeBtwAttack;
-
-	// Token: 0x04000028 RID: 40
 	public float startTimeBtwAttack;
-
-	// Token: 0x04000029 RID: 41
 	public Transform attackPos;
-
-	// Token: 0x0400002A RID: 42
 	public Transform attackPos2;
-
-	// Token: 0x0400002B RID: 43
 	public Transform attackPos3;
-
-	// Token: 0x0400002C RID: 44
 	public LayerMask whatIsEnemies;
-
-	// Token: 0x0400002D RID: 45
+    public LayerMask whatIsSpikes;
 	public float attackRangeX;
 
 	// Token: 0x0400002E RID: 46
@@ -86,4 +30,91 @@ public class PlayerAttack : MonoBehaviour
 
 	// Token: 0x04000033 RID: 51
 	public int damage;
+
+	private Playercontroller playerMovement;
+	
+	private void Start()
+	{
+		playerMovement = GetComponent<Playercontroller>();
+	}
+	private void Update()
+	{
+        if (timeBtwAttack > 0)
+        {
+            timeBtwAttack -= Time.deltaTime;
+        }
+
+        if (timeBtwAttack <= 0)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                bool hasAttacked = false;
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    Collider2D[] array = Physics2D.OverlapBoxAll(attackPos2.position, new Vector2(attackRangeX2, attackRangeY2), 0f, whatIsEnemies);
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        if (array[i].GetComponent<Patrol>() != null) 
+                            array[i].GetComponent<Patrol>().TakeDamage(damage);
+                    }
+                    hasAttacked = true;
+                }
+                else if (Input.GetKey(KeyCode.S)) 
+                {
+                    LayerMask combinedMask = whatIsEnemies | whatIsSpikes;
+                    Collider2D[] array2 = Physics2D.OverlapBoxAll(attackPos3.position, new Vector2(attackRangeX3, attackRangeY3), 0f);
+                    
+                    if (array2.Length > 0)
+                    {
+                        bool hitSomethingToBounce = false;
+
+                        for (int j = 0; j < array2.Length; j++)
+                        {
+                            if (array2[j].GetComponent<Patrol>() != null) 
+                            {
+                                array2[j].GetComponent<Patrol>().TakeDamage(damage);
+                                hitSomethingToBounce = true;
+                            }
+                            else if (((1 << array2[j].gameObject.layer) & whatIsSpikes) != 0)
+                            {
+                                hitSomethingToBounce = true;
+                            }
+                        }
+                        if (hitSomethingToBounce && playerMovement != null)
+                        {
+                            playerMovement.Pogo();
+                        }
+                        
+                    }
+                    hasAttacked = true;
+                }
+                else 
+                {
+                    Collider2D[] array3 = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0f, whatIsEnemies);
+                    for (int k = 0; k < array3.Length; k++)
+                    {
+                        if (array3[k].GetComponent<Patrol>() != null) 
+                            array3[k].GetComponent<Patrol>().TakeDamage(damage);
+                    }
+                    hasAttacked = true;
+                }
+
+                if (hasAttacked)
+                {
+                    timeBtwAttack = startTimeBtwAttack;
+                }
+            }
+        }
+    }
+
+	// Token: 0x06000023 RID: 35 RVA: 0x00002844 File Offset: 0x00000A44
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireCube(attackPos.position, new Vector3(attackRangeX, attackRangeY, 1f));
+		Gizmos.DrawWireCube(attackPos2.position, new Vector3(attackRangeX2, attackRangeY2, 1f));
+		Gizmos.DrawWireCube(attackPos3.position, new Vector3(attackRangeX3, attackRangeY3, 1f));
+	}
+
 }
