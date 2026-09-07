@@ -55,8 +55,8 @@ public class PlayerAttack : MonoBehaviour
                     Collider2D[] array = Physics2D.OverlapBoxAll(attackPos2.position, new Vector2(attackRangeX2, attackRangeY2), 0f, whatIsEnemies);
                     for (int i = 0; i < array.Length; i++)
                     {
-                        if (array[i].GetComponent<Patrol>() != null) 
-                            array[i].GetComponent<Patrol>().TakeDamage(damage);
+                        if (array[i].GetComponent<Patrol1>() != null) 
+                            array[i].GetComponent<Patrol1>().TakeDamage(damage);
                     }
                     hasAttacked = true;
                 }
@@ -71,9 +71,9 @@ public class PlayerAttack : MonoBehaviour
 
                         for (int j = 0; j < array2.Length; j++)
                         {
-                            if (array2[j].GetComponent<Patrol>() != null) 
+                            if (array2[j].GetComponent<Patrol1>() != null) 
                             {
-                                array2[j].GetComponent<Patrol>().TakeDamage(damage);
+                                array2[j].GetComponent<Patrol1>().TakeDamage(damage);
                                 hitSomethingToBounce = true;
                             }
                             else if (((1 << array2[j].gameObject.layer) & whatIsSpikes) != 0)
@@ -94,8 +94,8 @@ public class PlayerAttack : MonoBehaviour
                     Collider2D[] array3 = Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), 0f, whatIsEnemies);
                     for (int k = 0; k < array3.Length; k++)
                     {
-                        if (array3[k].GetComponent<Patrol>() != null) 
-                            array3[k].GetComponent<Patrol>().TakeDamage(damage);
+                        if (array3[k].GetComponent<Patrol1>() != null) 
+                            array3[k].GetComponent<Patrol1>().TakeDamage(damage);
                     }
                     hasAttacked = true;
                 }

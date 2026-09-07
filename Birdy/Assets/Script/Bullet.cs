@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 	// Token: 0x0600002D RID: 45 RVA: 0x00002C90 File Offset: 0x00000E90
 	private void OnTriggerEnter2D(Collider2D hitInfo)
 	{
-		Patrol component = hitInfo.GetComponent<Patrol>();
+		Patrol1 component = hitInfo.GetComponent<Patrol1>();
 		if (component != null)
 		{
 			component.TakeDamage(this.damage);

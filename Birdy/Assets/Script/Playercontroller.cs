@@ -142,7 +142,7 @@ public class Playercontroller : MonoBehaviour
 	// Token: 0x06000029 RID: 41 RVA: 0x00002BAA File Offset: 0x00000DAA
 	private bool IsGrounded()
 	{
-		return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+		return Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
