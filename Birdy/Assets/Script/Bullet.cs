@@ -4,29 +4,48 @@ using UnityEngine;
 // Token: 0x0200000E RID: 14
 public class Bullet : MonoBehaviour
 {
-	// Token: 0x0600002C RID: 44 RVA: 0x00002C68 File Offset: 0x00000E68
-	private void Start()
-	{
-		this.rb.linearVelocity = base.transform.right * this.speed;
-	}
-
-	// Token: 0x0600002D RID: 45 RVA: 0x00002C90 File Offset: 0x00000E90
-	private void OnTriggerEnter2D(Collider2D hitInfo)
-	{
-		Patrol1 component = hitInfo.GetComponent<Patrol1>();
-		if (component != null)
-		{
-			component.TakeDamage(this.damage);
-		}
-		Destroy(gameObject);
-	}
-
-	// Token: 0x0400003F RID: 63
-	public float speed = 20f;
-
-	// Token: 0x04000040 RID: 64
+    public float speed = 20f;
 	public int damage = 3;
-
 	// Token: 0x04000041 RID: 65
 	public Rigidbody2D rb;
+	private void Start()
+	{
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+		rb.linearVelocity = base.transform.right * speed;
+	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+    }
+	private void OnTriggerEnter2D(Collider2D hitInfo)
+    {
+
+		if (hitInfo.CompareTag("Player") || hitInfo.CompareTag("Wall"))
+        {
+            return;
+        }
+
+        Patrol1 patrolEnemy = hitInfo.GetComponent<Patrol1>();
+        if (patrolEnemy != null)
+        {
+            patrolEnemy.TakeDamage(damage);
+            Destroy(gameObject);
+            return; 
+        }
+
+        FlyEnemy flyingEnemy = hitInfo.GetComponent<FlyEnemy>();
+        if (flyingEnemy != null)
+        {
+            flyingEnemy.TakeDamage(damage);
+            Destroy(gameObject);
+            return; 
+        }
+        
+        Destroy(gameObject);
+        
+    }
+
+
+	
 }
