@@ -1,42 +1,34 @@
 using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
-
 {
-    private Health respawn;
-    [SerializeField] private float MoreHealth = 0f;
-
-    void Awake()
-    {
-        respawn = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             Health playerHealth = other.GetComponent<Health>();
 
             if (playerHealth != null)
             {
                 playerHealth.respawnPoint = this.gameObject;
-            }
-        }
+                
+                playerHealth.AddHealth(playerHealth.maxHealth);
 
-        if(other.tag == "Player")
-        {
-            
-            Health playerHealth = other.GetComponent<Health>();
-
-            if (playerHealth != null)
-            {
-                playerHealth.IncreaseMaxHealth(MoreHealth);
                 gameObject.SetActive(false);
             }
         }
     }
 
-    
+    public static void ResetAllCheckpoints()
+    {
+        CheckPoint[] checkpoints = Resources.FindObjectsOfTypeAll<CheckPoint>();
+        
+        foreach (CheckPoint cp in checkpoints)
+        {
+            if (cp != null && cp.gameObject != null && cp.gameObject.scene.isLoaded)
+            {
+                cp.gameObject.SetActive(true);
+            }
+        }
+    }
 }
-
-

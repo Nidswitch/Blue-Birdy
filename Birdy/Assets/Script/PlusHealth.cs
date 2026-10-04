@@ -2,21 +2,31 @@ using UnityEngine;
 
 public class PlusHealth : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private float healthValue;
-    [SerializeField] private float MoreHealth = 5f;
+    [SerializeField] private float bonusMaxHealth = 5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
-            
             Health playerHealth = collision.GetComponent<Health>();
 
             if (playerHealth != null)
             {
-                playerHealth.IncreaseMaxHealth(MoreHealth);
+                playerHealth.IncreaseMaxHealth(bonusMaxHealth);
                 gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public static void ResetAllHealthPickups()
+    {
+        PlusHealth[] healthPickups = Resources.FindObjectsOfTypeAll<PlusHealth>();
+
+        foreach (PlusHealth hp in healthPickups)
+        {
+            if (hp != null && hp.gameObject != null && hp.gameObject.scene.isLoaded)
+            {
+                hp.gameObject.SetActive(true);
             }
         }
     }

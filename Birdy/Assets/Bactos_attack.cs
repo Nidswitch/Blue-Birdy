@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class Bactos_attack : StateMachineBehaviour
 {
@@ -10,14 +11,17 @@ public class Bactos_attack : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.LocalClient != null && NetworkManager.Singleton.LocalClient.PlayerObject != null)
+            {
+                player = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
+            }
         rb = animator.GetComponent<Rigidbody2D>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Vector2 target = new Vector2(player.position.x, rb.position.y);
+        Vector2 target = player != null ? new Vector2(player.position.x, rb.position.y) : Vector2.zero;
 
         if (player == null || rb == null) return;
     float directionToPlayer = player.position.x - rb.position.x;

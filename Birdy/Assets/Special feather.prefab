@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8925442229883350699}
   - component: {fileID: 1851573085778005986}
   - component: {fileID: 4783273553444828645}
-  - component: {fileID: 802239057609742796}
+  - component: {fileID: 911608833180970062}
   m_Layer: 8
   m_Name: Special feather
   m_TagString: Special feather
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.003211975, y: 0}
   m_Radius: 0.31959534
---- !u!114 &802239057609742796
+--- !u!114 &911608833180970062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,8 +161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4857037261239127302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801324d84a313b546aeb04df87a21405, type: 3}
+  m_Script: {fileID: 11500000, guid: 38b93952239b173498e6e71184910612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  healthValue: 0
-  MoreHealth: 5
+  bonusMaxHealth: 5

@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
-public class Playercontroller : MonoBehaviour
+using Unity.Netcode;
+public class Playercontroller : NetworkBehaviour
 {
 	public CharacterController2D controller;
 	public Animator animator;
 	private float horizontal;
 	[SerializeField] private float speed = 5f;
-	[SerializeField] private float JumpingPower = 16f;
-	[SerializeField] private float FlyJumpPower = 10f;
+	public float JumpingPower = 16f;
+	public float baseJumpingPower = 16f;
+	public float FlyJumpPower = 10f;
 	private bool isFacingRight = true;
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
@@ -15,13 +17,14 @@ public class Playercontroller : MonoBehaviour
 	private bool isTopDownMode;
 	[SerializeField] private float isTopDownSpeed = 6f;
 	[SerializeField] private float glideSpeed = 2f;
-	private bool canFly = false;
+	public bool canFly = false;
 
     [SerializeField] private float bouncePower = 12f;
 	
 	
 	private void Update()
 	{
+		if (!IsOwner) return;
 		if (Input.GetKeyDown(KeyCode.F))
 		{
 			isTopDownMode = !isTopDownMode;
@@ -145,15 +148,7 @@ public class Playercontroller : MonoBehaviour
 		return Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
 	}
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.CompareTag("Special feather"))
-		{
-			canFly = true;
-			JumpingPower = FlyJumpPower;
-			Destroy(collision.gameObject);
-		}
-	}
+	
 
 	// Token: 0x0600002A RID: 42 RVA: 0x00002BD8 File Offset: 0x00000DD8
 	private void Flip()

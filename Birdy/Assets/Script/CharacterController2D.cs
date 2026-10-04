@@ -8,27 +8,27 @@ public class CharacterController2D : MonoBehaviour
 	// Token: 0x06000006 RID: 6 RVA: 0x000021E1 File Offset: 0x000003E1
 	private void Awake()
 	{
-		this.m_Rigidbody2D = base.GetComponent<Rigidbody2D>();
-		if (this.OnLandEvent == null)
+		m_Rigidbody2D = base.GetComponent<Rigidbody2D>();
+		if (OnLandEvent == null)
 		{
-			this.OnLandEvent = new UnityEvent();
+			OnLandEvent = new UnityEvent();
 		}
 	}
 
 	// Token: 0x06000007 RID: 7 RVA: 0x00002204 File Offset: 0x00000404
 	private void FixedUpdate()
 	{
-		bool grounded = this.m_Grounded;
-		this.m_Grounded = false;
-		Collider2D[] array = Physics2D.OverlapCircleAll(this.m_GroundCheck.position, 0.2f, this.m_WhatIsGround);
+		bool grounded = m_Grounded;
+		m_Grounded = false;
+		Collider2D[] array = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_WhatIsGround);
 		for (int i = 0; i < array.Length; i++)
 		{
 			if (array[i].gameObject != base.gameObject)
 			{
-				this.m_Grounded = true;
+				m_Grounded = true;
 				if (!grounded)
 				{
-					this.OnLandEvent.Invoke();
+					OnLandEvent.Invoke();
 				}
 			}
 		}

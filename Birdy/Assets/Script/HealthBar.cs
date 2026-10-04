@@ -1,20 +1,39 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Health playerHealth;
     [SerializeField] private Image totalhealthBar;
     [SerializeField] private Image currentlhealthBar;
 
+    private Health playerHealth;
     private float baseMaxHealth = 10f;
-
 
     private void Update()
     {
-        totalhealthBar.fillAmount = playerHealth.maxHealth / baseMaxHealth;
-        currentlhealthBar.fillAmount = playerHealth.currentHealth / baseMaxHealth;
+        if (playerHealth == null)
+        {
+            FindLocalPlayerHealth();
+            return;
+        }
+
+        if (playerHealth.maxHealth > 0)
+        {
+            totalhealthBar.fillAmount = playerHealth.maxHealth / baseMaxHealth;
+            currentlhealthBar.fillAmount = playerHealth.currentHealth / baseMaxHealth;
+        }
+    }
+
+    private void FindLocalPlayerHealth()
+    {
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.LocalClient != null)
+        {
+            var playerObject = NetworkManager.Singleton.LocalClient.PlayerObject;
+            if (playerObject != null)
+            {
+                playerHealth = playerObject.GetComponent<Health>();
+            }
+        }
     }
 }
