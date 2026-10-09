@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
+using NUnit.Framework;
 public class Playercontroller : NetworkBehaviour
 {
 	public CharacterController2D controller;
@@ -11,6 +13,11 @@ public class Playercontroller : NetworkBehaviour
 	public float baseJumpingPower = 16f;
 	public float FlyJumpPower = 10f;
 	private bool isFacingRight = true;
+	private bool canDash = true;
+	private bool isDashing;
+	private float dashingPower = 24f;
+	private float dashingTime = 0.2f;
+	private float dashingCooldown = 1f;
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private LayerMask groundLayer;
@@ -18,6 +25,7 @@ public class Playercontroller : NetworkBehaviour
 	[SerializeField] private float isTopDownSpeed = 6f;
 	[SerializeField] private float glideSpeed = 2f;
 	public bool canFly = false;
+	public bool canShoot = false;
 
     [SerializeField] private float bouncePower = 12f;
 	
@@ -55,6 +63,10 @@ public class Playercontroller : NetworkBehaviour
 		}
 		else
 		{
+			if (isDashing)
+			{
+				return;
+			}
 			horizontal = Input.GetAxisRaw("Horizontal");
 			animator.SetFloat("Speed", Mathf.Abs(horizontal));
 			if (Input.GetButtonDown("Jump") && (IsGrounded() || canFly))
@@ -73,6 +85,10 @@ public class Playercontroller : NetworkBehaviour
 			if (!IsGrounded() && !animator.GetBool("isAttacking") && !animator.GetBool("isAttackingUp") && !animator.GetBool("isAttackingDown") && !animator.GetBool("IsShooting"))
 			{
 				animator.SetBool("IsJumping", true);
+			}
+			if (Input.GetKeyDown(KeyCode.LeftControl) && canDash)
+			{
+				StartCoroutine(Dash());
 			}
 			
 		}
@@ -104,10 +120,14 @@ public class Playercontroller : NetworkBehaviour
 			animator.SetBool("isAttacking", false);
 			animator.SetBool("IsJumping", false);
 		}
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetKeyDown(KeyCode.Mouse1) && canShoot)
 		{
 			animator.SetBool("IsShooting", true);
 			animator.SetBool("IsJumping", false);
+		}
+		if (Input.GetKeyUp(KeyCode.Mouse1))
+		{
+			animator.SetBool("IsShooting", false);
 		}
 		Flip();
 	}
@@ -136,6 +156,11 @@ public class Playercontroller : NetworkBehaviour
 	// Token: 0x06000028 RID: 40 RVA: 0x00002B73 File Offset: 0x00000D73
 	private void FixedUpdate()
 	{
+		if (isDashing)
+		{
+			return;
+		}
+
 		if (!isTopDownMode)
 		{
 			rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
@@ -160,8 +185,24 @@ public class Playercontroller : NetworkBehaviour
 		}
 	}
 
+	private IEnumerator Dash()
+	{
+		canDash = false;
+		isDashing = true;
+		float originalGravity = rb.gravityScale;
+		rb.gravityScale = 0f;
+		rb.linearVelocity = new Vector2(transform.right.x * dashingPower, 0f);
+		yield return new WaitForSeconds(dashingTime);
+		rb.gravityScale = originalGravity;
+		isDashing = false;
+		yield return new WaitForSeconds(dashingCooldown);
+		canDash = true;
+	}
 	
+	public void EnableGun()
+		{
+			canShoot = true;
+		}
 
-	// Token: 0x04000034 RID: 52
-	
+
 }
