@@ -204,5 +204,36 @@ public class Playercontroller : NetworkBehaviour
 			canShoot = true;
 		}
 
+	public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        // Si c'est bien l'hôte et que c'est notre propre joueur local
+        if (IsServer && IsOwner)
+        {
+            StartCoroutine(TeleportToSpawnPoint());
+        }
+    }
+
+    private IEnumerator TeleportToSpawnPoint()
+    {
+        // On attend une frame pour être sûr que la scène et les objets sont bien en place
+        yield return null;
+
+        GameObject spawnPoint = GameObject.Find("RespawnPoint");
+        if (spawnPoint != null)
+        {
+            // Désactive temporairement le Rigidbody pour éviter un conflit de vélocité
+            if (rb != null) rb.simulated = false;
+
+            transform.position = spawnPoint.transform.position;
+            transform.rotation = spawnPoint.transform.rotation;
+
+            if (rb != null) rb.simulated = true;
+           
+        }
+        
+    }
+
 
 }

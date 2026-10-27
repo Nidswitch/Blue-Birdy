@@ -47,8 +47,11 @@ TagManager:
   - name: 4
     uniqueID: 1895975587
     locked: 0
-  - name: Nest
+  - name: Other
     uniqueID: 1039223743
+    locked: 0
+  - name: Nest Layer 6
+    uniqueID: 464417115
     locked: 0
   - name: Default
     uniqueID: 0

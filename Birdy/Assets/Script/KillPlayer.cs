@@ -1,18 +1,40 @@
 using System;
 using UnityEngine;
 
-// Token: 0x02000009 RID: 9
 public class KillPlayer : MonoBehaviour
 {
-	// Token: 0x0600001A RID: 26 RVA: 0x0000245F File Offset: 0x0000065F
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.tag == "Player")
-		{
-			collision.GetComponent<Health>().TakeDamage(damage);
-		}
-	}
+    [SerializeField] private float damage;
+    [SerializeField] private float damageInterval = 1f;
+    private float cooldownTimer;
 
-	// Token: 0x0400001C RID: 28
-	[SerializeField] private float damage;
+    private void Update()
+    {
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && cooldownTimer <= 0)
+        {
+            Health playerHealth = collision.GetComponent<Health>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+                
+                // Réinitialise le cooldown
+                cooldownTimer = damageInterval;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            cooldownTimer = 0f;
+        }
+    }
 }

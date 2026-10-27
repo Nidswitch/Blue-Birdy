@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 8857727061444629369}
   - component: {fileID: 641400857396632805}
   - component: {fileID: 7642291460556638196}
+  - component: {fileID: 6334585203056702820}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -246,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1941486691
+  GlobalObjectIdHash: 1772428251
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -278,6 +279,7 @@ MonoBehaviour:
   animator: {fileID: 5590926975891780707}
   speed: 7
   JumpingPower: 16
+  baseJumpingPower: 16
   FlyJumpPower: 10
   rb: {fileID: 3250744475488798789}
   groundCheck: {fileID: 1739799412566533070}
@@ -286,6 +288,8 @@ MonoBehaviour:
     m_Bits: 64
   isTopDownSpeed: 6
   glideSpeed: 1
+  canFly: 0
+  canShoot: 0
   bouncePower: 10
 --- !u!114 &1839471412820113879
 MonoBehaviour:
@@ -328,8 +332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e8116fc257de7459a19e56ddcfeb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
   startingHealth: 5
-  player: {fileID: 245026545323484792}
   respawnPoint: {fileID: 0}
 --- !u!114 &7470680165241262948
 MonoBehaviour:
@@ -346,6 +350,7 @@ MonoBehaviour:
   startTimeBtwAttack: 0
   firePoint: {fileID: 4176257469243983345}
   bulletPrefab: {fileID: 8337444609810360546, guid: d79138af92788354b82d4c27d7f4beb5, type: 3}
+  playerController: {fileID: 0}
 --- !u!114 &8857727061444629369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,6 +466,18 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
+--- !u!114 &6334585203056702820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245026545323484792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49e666d69fffc84dbdac7c1b8a432c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1551798504228048983
 GameObject:
   m_ObjectHideFlags: 0

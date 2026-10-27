@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a092c41ecf5d94f4cb44d5ec7c4d681e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hostSpawnPoint: {fileID: 3135690062495673892, guid: 81a187edb7ff48044a6c5194f1498b16, type: 3}
 --- !u!1 &634416800
 GameObject:
   m_ObjectHideFlags: 0
